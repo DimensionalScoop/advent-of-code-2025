@@ -1,6 +1,14 @@
+def read_lines(file):
+    with open(file, "r") as f:
+        lines = f.readlines()
+    lines = [l.strip() for l in lines]
+    lines = [l for l in lines if len(l) > 0]
+    return lines
+
+
 def parse_line(line):
     dir = line[0]
-    raw_steps = int(line[1:])
+    raw_steps = int(line[1:])  # ignore \n
 
     match dir:
         case "L":
@@ -12,14 +20,13 @@ def parse_line(line):
     return steps
 
 
-with open("data/d1", "r") as f:
-    lines = f.readlines()
-document = [parse_line(l) for l in lines]
-
 dial = 50
 DIAL_RANGE = 100
 
 if __name__ == "__main__":
+    lines = read_lines("data/d1a")
+    document = [parse_line(l) for l in lines]
+
     zeros_obs = 0
     for step in document:
         dial += step
