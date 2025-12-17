@@ -12,9 +12,9 @@ def parse_line(line):
 
     match dir:
         case "L":
-            steps = raw_steps
-        case "R":
             steps = -raw_steps
+        case "R":
+            steps = raw_steps
         case _:
             raise NotImplementedError()
     return steps
