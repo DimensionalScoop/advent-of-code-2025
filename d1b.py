@@ -1,4 +1,4 @@
-from d1a import read_lines, parse_line, dial, DIAL_RANGE
+from d1a import DIAL_RANGE, dial, parse_line, read_lines
 
 
 def process_step(dial, step):
@@ -17,6 +17,8 @@ def process_step(dial, step):
     (88, 0)
     >>> process_step(33, -33)
     (0, 0)
+    >>> process_step(99, 1)
+    (0, 0)
     """
     zero_passes = 0
     old_dial = dial
@@ -34,7 +36,8 @@ def process_step(dial, step):
     if old_dial == 0:
         pass
     elif dial != (dial % DIAL_RANGE):
-        zero_passes += 1
+        if dial % DIAL_RANGE != 0:  # only when we pass zero we actually increment
+            zero_passes += 1
 
     dial = dial % DIAL_RANGE
     return dial, zero_passes

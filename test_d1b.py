@@ -18,7 +18,6 @@ def test_fwd():
 
     zeros_obs = 0
     for step in document:
-        print(dial)
         assert step != 0
 
         dial, this_zero = process_step(dial, step)
@@ -27,4 +26,5 @@ def test_fwd():
             zeros_obs += 1
 
     assert dial == 32
-    assert zeros_obs == 3, f"Should be 3, but is {zeros_obs}"
+    TARGET = 6
+    assert zeros_obs == TARGET, f"Should be {TARGET}, but is {zeros_obs}"
