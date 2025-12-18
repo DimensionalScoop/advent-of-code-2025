@@ -69,12 +69,17 @@ def is_free(map, x, y):
     return paper_count <= MAX_PAPER_FOR_FREE
 
 
+def find_free_rolls(map):
+    for x in range(1, map.shape[0] - 1):
+        for y in range(1, map.shape[1] - 1):
+            if map[x, y] == PAPER:
+                if is_free(map, x, y):
+                    yield (x, y)
+
+
 if __name__ == "__main__":
     unpadded_map = parse_input()
     map = pad_map(unpadded_map)
-    free_count = 0
-    for x in range(unpadded_map.shape[0]):
-        for y in range(unpadded_map.shape[1]):
-            if map[x + 1, y + 1] == PAPER:
-                free_count += is_free(map, x + 1, y + 1)
+    free_idx = find_free_rolls(map)
+    free_count = len(list(free_idx))
     print(free_count)
