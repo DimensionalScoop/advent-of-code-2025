@@ -9,7 +9,7 @@ def read_lines(file):
     return lines
 
 
-def max_joltage(bank):
+def max_joltage(bank, digits=(2, 1)):
     """
     >>> max_joltage("811111111111119")
     89
@@ -19,7 +19,6 @@ def max_joltage(bank):
     # array[:-i] only works for i>0, so we add a dummy digit at the end
     bank = np.asarray([int(n) for n in str(bank) + "0"])
     rv = ""
-    digits = [2, 1]
     for i in digits:
         first_max_idx = np.argmax(bank[:-i])
         rv += str(bank[first_max_idx])
@@ -29,4 +28,8 @@ def max_joltage(bank):
 
 if __name__ == "__main__":
     res = sum([max_joltage(l) for l in read_lines("data/d3")])
+    print(res)
+
+    digits = range(12, 0, -1)
+    res = sum([max_joltage(l, digits) for l in read_lines("data/d3")])
     print(res)
