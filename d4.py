@@ -83,3 +83,13 @@ if __name__ == "__main__":
     free_idx = find_free_rolls(map)
     free_count = len(list(free_idx))
     print(free_count)
+
+    total_removed = 0
+    free_count = np.inf
+    while free_count > 0:
+        free_idx = list(find_free_rolls(map))
+        free_count = len(free_idx)
+        for x, y in free_idx:
+            map[x, y] = EMPTY
+        total_removed += free_count
+    print(total_removed)
