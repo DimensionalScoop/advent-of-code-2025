@@ -3,9 +3,15 @@ name = "advent-of-code-25"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
+    "numpy>=2.3.5",
     "pytest>=9.0.2",
 ]
 
 [tool.pytest]
 addopts = ["--doctest-modules"]
 doctest_optionflags = ["NORMALIZE_WHITESPACE", "IGNORE_EXCEPTION_DETAIL"]
+
+[dependency-groups]
+dev = [
+    "pudb>=2025.1.5",
+]
