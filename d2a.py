@@ -29,11 +29,11 @@ def is_dub(number):
     return a == b
 
 
-def get_dubs(start, stop):
+def get_dubs(start, stop, is_dub):
     """
-    >>> get_dubs("11",22)
+    >>> get_dubs("11",22, is_dub)
     [11, 22]
-    >>> get_dubs(38593856, "38593862")
+    >>> get_dubs(38593856, "38593862", is_dub)
     [38593859]
     """
     start, stop = int(start), int(stop)
@@ -43,5 +43,5 @@ def get_dubs(start, stop):
 
 
 if __name__ == "__main__":
-    all_dubs = [get_dubs(start, stop) for start, stop in get_input()]
+    all_dubs = [get_dubs(start, stop, is_dub) for start, stop in get_input()]
     print(sum([sum(l) for l in all_dubs]))
