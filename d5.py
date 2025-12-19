@@ -24,6 +24,7 @@ class FreshnessDB:
         # build an index
         fresh_ranges = sorted(fresh_ranges, key=lambda a: a[1])
         self.fresh_ranges = fresh_ranges
+        self.fresh_ranges_sorted_by_start = sorted(fresh_ranges, key=lambda a: a[0])
         self.check_consistency()
 
     def check_consistency(self):
@@ -43,6 +44,40 @@ class FreshnessDB:
             if stop >= i >= start:
                 return True
         return False
+
+    def total_fresh_ingred(self):
+        count = 0
+        i = self.min()
+
+        while i <= self.max():
+            if self.is_fresh(i):
+                stop = self._get_next_stop(i)
+                count += stop - i + 1
+                i = stop + 1
+            else:
+                try:
+                    i = self._get_next_start(i)
+                except LastIntervalException:
+                    break
+
+        return count
+
+    def _get_next_stop(self, i):
+        for start, stop in self.fresh_ranges:
+            if stop >= i >= start:
+                return stop
+        raise ValueError(f"{i} is not fresh!")
+
+    def _get_next_start(self, i):
+        ranges = self.fresh_ranges_sorted_by_start
+        for start, stop in ranges:
+            if i < start:
+                return start
+        raise LastIntervalException()
+
+
+class LastIntervalException(Exception):
+    pass
 
 
 def create_fresh_db(fresh_ranges):
@@ -69,3 +104,5 @@ if __name__ == "__main__":
     assert db.is_fresh(db.max())
     fresh_ingreditens = [i for i in available if db.is_fresh(i)]
     print(len(fresh_ingreditens))
+
+    print(db.total_fresh_ingred())

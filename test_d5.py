@@ -41,6 +41,22 @@ def test_extended(example_input, example_output):
     assert tuple(fresh_ingreditens) == example_output
 
 
+def test_start_stop(example_input, example_output):
+    fresh_ranges, _ = d5.parse_ingredients(example_input.split("\n"))
+    db = d5.FreshnessDB(fresh_ranges)
+
+    assert db._get_next_start(1) == 3
+    assert db._get_next_start(9) == 10
+    with pytest.raises(d5.LastIntervalException):
+        db._get_next_start(17)
+
+    assert db._get_next_stop(10) == 14
+    assert db._get_next_stop(12) == 14
+    assert db._get_next_stop(15) == 18
+
+    assert db.total_fresh_ingred() == 14
+
+
 # def test_parse():
 #     lines = "3-5\n10-14\n16-20\n12-18\n\n1\n5\n8\n11\n17\n32\n"
 #     fresh, avail = parse_ingredients(lines)
